@@ -1,0 +1,248 @@
+[
+    {
+        "id": "670879269ac902b0",
+        "type": "tab",
+        "label": "Flux 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "mqtt-in",
+        "type": "mqtt in",
+        "z": "670879269ac902b0",
+        "name": "ChirpStack MQTT",
+        "topic": "application/132d9611-8321-4b44-b982-6c837c8f9115/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "cd21e2eedda73ee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "73cb88ebfc1079ba"
+            ]
+        ]
+    },
+    {
+        "id": "debug-raw",
+        "type": "debug",
+        "z": "670879269ac902b0",
+        "name": "Payload brut MQTT",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "debug-json",
+        "type": "debug",
+        "z": "670879269ac902b0",
+        "name": "JSON décodé",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "voltage-fn",
+        "type": "function",
+        "z": "670879269ac902b0",
+        "name": "Extraire Tension",
+        "func": "msg.topic = \"Tension\";\nmsg.payload = msg.payload.object.analogInput[\"8\"];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 400,
+        "wires": [
+            [
+                "chart"
+            ]
+        ]
+    },
+    {
+        "id": "chart",
+        "type": "ui_chart",
+        "z": "670879269ac902b0",
+        "name": "Courbe Tension",
+        "group": "ec0a264024c27615",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Tension depuis ChirpStack",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff7f0e",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73cb88ebfc1079ba",
+        "type": "change",
+        "z": "670879269ac902b0",
+        "name": "Filtre",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "de69f585e6d11076"
+            ]
+        ]
+    },
+    {
+        "id": "de69f585e6d11076",
+        "type": "json",
+        "z": "670879269ac902b0",
+        "name": "Conversion Json",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 450,
+        "y": 400,
+        "wires": [
+            [
+                "voltage-fn"
+            ]
+        ]
+    },
+    {
+        "id": "422573eb895e29a7",
+        "type": "debug",
+        "z": "670879269ac902b0",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "cd21e2eedda73ee8",
+        "type": "mqtt-broker",
+        "name": "Chirpstack",
+        "broker": "10.140.130.31",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ec0a264024c27615",
+        "type": "ui_group",
+        "name": "Monitoring",
+        "tab": "tab1",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "tab1",
+        "type": "ui_tab",
+        "name": "ChirpStack_Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "dc4bbeb37a8cdad9",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
