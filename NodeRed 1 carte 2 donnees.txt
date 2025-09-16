@@ -1,0 +1,290 @@
+[
+    {
+        "id": "8db3630c2fcf3584",
+        "type": "tab",
+        "label": "Flux 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a20e4b87cb97553b",
+        "type": "mqtt in",
+        "z": "8db3630c2fcf3584",
+        "name": "ChirpStack MQTT",
+        "topic": "application/132d9611-8321-4b44-b982-6c837c8f9115/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "cd21e2eedda73ee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "b6a57d1e202ddbd0"
+            ]
+        ]
+    },
+    {
+        "id": "246a908506b8260c",
+        "type": "function",
+        "z": "8db3630c2fcf3584",
+        "name": "Extraire Tension Fixe",
+        "func": "msg.topic = \"Tension\";\nmsg.payload = msg.payload.object.analogInput[\"8\"];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 260,
+        "wires": [
+            [
+                "6278c0098ced06ed"
+            ]
+        ]
+    },
+    {
+        "id": "6278c0098ced06ed",
+        "type": "ui_chart",
+        "z": "8db3630c2fcf3584",
+        "name": "Courbe Tension Fixe",
+        "group": "ec0a264024c27615",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Tension depuis ChirpStack",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff7f0e",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1060,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6a57d1e202ddbd0",
+        "type": "change",
+        "z": "8db3630c2fcf3584",
+        "name": "Filtre",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "368f8b4d763d2574"
+            ]
+        ]
+    },
+    {
+        "id": "368f8b4d763d2574",
+        "type": "json",
+        "z": "8db3630c2fcf3584",
+        "name": "Conversion Json",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 510,
+        "y": 380,
+        "wires": [
+            [
+                "246a908506b8260c",
+                "68a08c36a895ccda"
+            ]
+        ]
+    },
+    {
+        "id": "c920fa1e1dbf0550",
+        "type": "debug",
+        "z": "8db3630c2fcf3584",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "68a08c36a895ccda",
+        "type": "function",
+        "z": "8db3630c2fcf3584",
+        "name": "Extraire Tension Variable",
+        "func": "msg.topic = \"Tension\";\nmsg.payload = msg.payload.object.analogInput[\"9\"];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 500,
+        "wires": [
+            [
+                "7818971a380ff09d"
+            ]
+        ]
+    },
+    {
+        "id": "7818971a380ff09d",
+        "type": "ui_chart",
+        "z": "8db3630c2fcf3584",
+        "name": "Courbe Tension Variable",
+        "group": "e640c9b6cb980ac2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Tension depuis ChirpStack",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0fff3f",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1070,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd21e2eedda73ee8",
+        "type": "mqtt-broker",
+        "name": "Chirpstack",
+        "broker": "10.140.130.31",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ec0a264024c27615",
+        "type": "ui_group",
+        "name": "Groupe tension fixe",
+        "tab": "tab1",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e640c9b6cb980ac2",
+        "type": "ui_group",
+        "name": "Groupe tension variable",
+        "tab": "tab1",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "tab1",
+        "type": "ui_tab",
+        "name": "ChirpStack_2donnees",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": true,
+        "hidden": false
+    },
+    {
+        "id": "a3c540250aae030e",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

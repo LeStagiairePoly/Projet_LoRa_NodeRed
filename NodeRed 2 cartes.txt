@@ -1,0 +1,336 @@
+[
+    {
+        "id": "2e541aeb1269d06b",
+        "type": "tab",
+        "label": "Flux 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "aaa16ffbfe42f13c",
+        "type": "mqtt in",
+        "z": "2e541aeb1269d06b",
+        "name": "ChirpStack MQTT 1",
+        "topic": "application/132d9611-8321-4b44-b982-6c837c8f9115/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "cd21e2eedda73ee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "15699652b996642e"
+            ]
+        ]
+    },
+    {
+        "id": "2139f5c6b6c5113c",
+        "type": "function",
+        "z": "2e541aeb1269d06b",
+        "name": "Extraire Tension",
+        "func": "msg.topic = \"Tension\";\nmsg.payload = msg.payload.object.analogInput[\"8\"];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 340,
+        "wires": [
+            [
+                "d22b855f90dc0e1c"
+            ]
+        ]
+    },
+    {
+        "id": "d22b855f90dc0e1c",
+        "type": "ui_chart",
+        "z": "2e541aeb1269d06b",
+        "name": "Courbe Tension",
+        "group": "614af3d2b353e126",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Tension depuis ChirpStack",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0fd7ff",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "15699652b996642e",
+        "type": "change",
+        "z": "2e541aeb1269d06b",
+        "name": "Filtre",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "0e97067b03c9de94"
+            ]
+        ]
+    },
+    {
+        "id": "0e97067b03c9de94",
+        "type": "json",
+        "z": "2e541aeb1269d06b",
+        "name": "Conversion Json",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 550,
+        "y": 340,
+        "wires": [
+            [
+                "2139f5c6b6c5113c"
+            ]
+        ]
+    },
+    {
+        "id": "d64b1a6c6072a6b1",
+        "type": "mqtt in",
+        "z": "2e541aeb1269d06b",
+        "name": "ChirpStack MQTT 2",
+        "topic": "application/4c06387f-af32-4856-8e26-d16172e5c697/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "cd21e2eedda73ee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "67265d7a4d3c2701"
+            ]
+        ]
+    },
+    {
+        "id": "ee6a1094e44932f9",
+        "type": "function",
+        "z": "2e541aeb1269d06b",
+        "name": "Extraire Temperature",
+        "func": "msg.topic = \"temperature\";\nmsg.payload = msg.payload.object.temperatureSensor[\"8\"];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 440,
+        "wires": [
+            [
+                "51fbd307840c76d6"
+            ]
+        ]
+    },
+    {
+        "id": "51fbd307840c76d6",
+        "type": "ui_chart",
+        "z": "2e541aeb1269d06b",
+        "name": "Courbe Temperature",
+        "group": "63b16b8d25960890",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature depuis ChirpStack",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "80",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff7f0e",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1060,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67265d7a4d3c2701",
+        "type": "change",
+        "z": "2e541aeb1269d06b",
+        "name": "Filtre",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "58a441b3dc10bc22"
+            ]
+        ]
+    },
+    {
+        "id": "58a441b3dc10bc22",
+        "type": "json",
+        "z": "2e541aeb1269d06b",
+        "name": "Conversion Json",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "ee6a1094e44932f9"
+            ]
+        ]
+    },
+    {
+        "id": "cd21e2eedda73ee8",
+        "type": "mqtt-broker",
+        "name": "Chirpstack",
+        "broker": "10.140.130.31",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "614af3d2b353e126",
+        "type": "ui_group",
+        "name": "Carte 1",
+        "tab": "861a90875ec66975",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "63b16b8d25960890",
+        "type": "ui_group",
+        "name": "Carte 2",
+        "tab": "861a90875ec66975",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "861a90875ec66975",
+        "type": "ui_tab",
+        "name": "Chirpstack_2cartes",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3112c4a3be605873",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
